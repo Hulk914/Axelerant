@@ -1,0 +1,47 @@
+<div class="container  mt-4">
+  <div class="d-flex">
+    <h2 class="justify-content-start">Event List</h2>
+    <div class="justify-content-end ml-auto">
+      <div class="row">
+        <input class="form-control col-sm-7 mr-1" [(ngModel)]="searchVal" (ngModelChange)="searchName()" type="search"
+          placeholder="SEARCH EVENTS" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0 col-sm-4" type="submit">Search</button>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="isDataLoaded">
+    <!-- If lots of similar tables are present in the application this can be made into common component -->
+    <div class="row border border-bottom-0">
+      <div class="col-lg-3 border">Name</div>
+      <div class="col-lg-3 border">Image</div>
+      <div class="col-lg-3 border">Date</div>
+      <div class="col-lg-3 border">Seats</div>
+    </div>
+
+    <div class="row border" *ngFor="let event of data">
+      <div class="col-lg-3 border">{{event.name}}</div>
+      <div class="col-lg-3 border">
+        <img [src]="event.path">
+      </div>
+      <div class="col-lg-3 border">{{ event.date | date}}</div>
+      <div class="col-lg-3 border">
+        <div class="d-flex">
+          <span class="justify-content-start">{{event.seats}}</span>
+          <button *ngIf="event.seats > 0" type="button" class="btn btn-primary justify-content-end ml-auto"
+            (click)="navigate(event)">Book Now</button>
+          <button *ngIf="event.seats < 1" type="button" class="btn btn-danger justify-content-end ml-auto">Sold
+            Out</button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="data.length === 0 && isDataLoaded" class="d-flex border mx-auto">
+      <span class="justify-content-center mx-auto">No results found!</span>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="!isDataLoaded">
+    Loading ...
+  </ng-container>
+</div>

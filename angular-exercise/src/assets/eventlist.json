@@ -1,0 +1,28 @@
+{
+    "data": [
+        {
+            "name": "Sunburn",
+            "path": "https://picsum.photos/200",
+            "date": "02/07/2019",
+            "seats": 0
+        },
+        {
+            "name": "Battle of Bands",
+            "path": "https://picsum.photos/200",
+            "date": "02/07/2019",
+            "seats": 2
+        },
+        {
+            "name": "culture fest",
+            "path": "https://picsum.photos/200",
+            "date": "02/07/2019",
+            "seats": 21
+        },
+        {
+            "name": "painting",
+            "path": "https://picsum.photos/200",
+            "date": "02/07/2019",
+            "seats": 21
+        }
+    ]
+}
