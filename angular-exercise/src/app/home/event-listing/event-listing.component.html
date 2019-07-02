@@ -1,37 +1,42 @@
-<div class="container  mt-4">
-  <div class="d-flex">
-    <h2 class="justify-content-start">Event List</h2>
-    <div class="justify-content-end ml-auto">
-      <div class="row">
-        <input class="form-control col-sm-7 mr-1" [(ngModel)]="searchVal" (ngModelChange)="searchName()" type="search"
-          placeholder="SEARCH EVENTS" aria-label="Search">
+<div class="container  mt-4 p-0">
+  <div *ngIf="displayAlert" class="alert alert-danger" role="alert">
+    Sorry {{alertName}} is sold out!
+  </div>
+  <div class="d-flex justify-content-between align-items-center">
+    <h2>Event List</h2>
+    <div>
+      <div class="row mx-0 justify-content-end">
+        <input class="form-control col-sm-7 mr-2" [(ngModel)]="searchVal" (ngModelChange)="searchName()" type="search" placeholder="SEARCH EVENTS"
+          aria-label="Search">
         <button class="btn btn-outline-success my-2 my-sm-0 col-sm-4" type="submit">Search</button>
       </div>
     </div>
   </div>
 
-  <ng-container *ngIf="isDataLoaded">
+  <ng-container class="data-table" *ngIf="isDataLoaded">
     <!-- If lots of similar tables are present in the application this can be made into common component -->
-    <div class="row border border-bottom-0">
-      <div class="col-lg-3 border">Name</div>
-      <div class="col-lg-3 border">Image</div>
-      <div class="col-lg-3 border">Date</div>
-      <div class="col-lg-3 border">Seats</div>
+    <div class="row border mx-0 font-weight-bold">
+      <div class="col-lg-3 border data-table--border-width-color">Name</div>
+      <div class="col-lg-3 border data-table--border-width-color">Image</div>
+      <div class="col-lg-3 border data-table--border-width-color">Date</div>
+      <div class="col-lg-3 border data-table--border-width-color">Seats</div>
     </div>
 
-    <div class="row border" *ngFor="let event of data">
-      <div class="col-lg-3 border">{{event.name}}</div>
-      <div class="col-lg-3 border">
-        <img [src]="event.path">
+    <div class="row border data-table--border-width-color mx-0" *ngFor="let event of data">
+      <div class="col-lg-3 border-right data-table--border-width-color ">{{event.name}}</div>
+      <div class="col-lg-3 border-right data-table--border-width-color p-0">
+        <img [src]="event.path" class="img-fluid img-thumbnail w-100">
       </div>
-      <div class="col-lg-3 border">{{ event.date | date}}</div>
-      <div class="col-lg-3 border">
+      <div class="col-lg-3 border-right data-table--border-width-color">{{ event.date | date}}</div>
+      <div class="col-lg-3">
         <div class="d-flex">
           <span class="justify-content-start">{{event.seats}}</span>
-          <button *ngIf="event.seats > 0" type="button" class="btn btn-primary justify-content-end ml-auto"
-            (click)="navigate(event)">Book Now</button>
-          <button *ngIf="event.seats < 1" type="button" class="btn btn-danger justify-content-end ml-auto">Sold
-            Out</button>
+          <button *ngIf="event.seats > 0" type="button" class="btn btn-primary justify-content-end ml-auto mt-1" (click)="navigate(event)">Book
+            Now
+          </button>
+          <button *ngIf="event.seats < 1" type="button" class="btn btn-danger justify-content-end ml-auto mt-1" (click)="showAlert(event)">Sold
+            Out
+          </button>
         </div>
       </div>
     </div>

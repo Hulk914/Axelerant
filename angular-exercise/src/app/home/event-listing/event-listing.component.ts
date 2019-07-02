@@ -16,6 +16,8 @@ export class EventListingComponent implements OnInit {
   masterData = [];
   isDataLoaded = false;
   searchVal = '';
+  alertName = '';
+  displayAlert = false;
 
   constructor(private http: HttpClient, private router: Router, private eventService: EventService) { }
 
@@ -44,5 +46,13 @@ export class EventListingComponent implements OnInit {
   navigate(selectedEvent) {
     this.eventService.selectedEvent = selectedEvent;
     this.router.navigate(['/home/event-booking']);
+  }
+
+  showAlert(event) {
+    this.alertName = event.name;
+    this.displayAlert = true;
+    timer(2000).subscribe(() => {
+      this.displayAlert = false;
+    });
   }
 }
