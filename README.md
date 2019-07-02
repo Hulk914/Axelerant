@@ -31,7 +31,7 @@ Create Event Management System as per directions given by Axelerant for the purp
 - BEM naming convention followed for css classes
 - handling of unknown urls user may enter manually to page not found or home page
 - usage of reactive forms
-
+- using services to prevent resource utlization by event emitters. Although in this case since the scale of application is quite less so this will not have a big impact but in scenarios where lots of events are emitted for component communication, common services optimize the code.
 
 ## Enhancements
 - Currently we use lorem picsum to get the images which has a flaw. On each call a new image is obtained but for calls made within a very minute time margin same images are returned till next navigation.
@@ -40,3 +40,6 @@ This can be improved when we have a proper backend providing the paths to an sft
 - reducing number of seats from listing page for the event booked. Can be done easily using the shared service storing event data, left out since it was not part of requirements document.
 - design level css visual improvements.
 - the table heading come one by one in mobile screen size after which the data comes properly, this can be fixed but left out considering time constraints.
+- Making more granular components for handling table creation input fields etc. to make development fast through use of common components, since currently this is a small version having few components the need for applciation level common components was not there.
+- Making branches and merging through pull requests if multiple developers should work on this at any point of time. Currently pushed directly to master.
+- use of OnPush change detection or detachChanges when application grows larger. In current state these will have negligible impact.
