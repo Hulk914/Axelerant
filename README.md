@@ -23,7 +23,7 @@ Create Event Management System as per directions given by Axelerant for the purp
 - On successful submit proper message is shown below navbar and in console the final form object is logged. After this we get redirected to listing page again
 - if we have 6 attendees in total the submit message is hidden till we scroll so scrollintoview is used to scroll to the top and shwo the success alert.
 
-## Good Practises Followed
+## Good Practices Followed
 - Use of Lazy Loaded modules while routing.
 - Use of tslint
 - Usage of bootstrap responsive classes to avoid breaking in smaller screens. 
