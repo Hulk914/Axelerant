@@ -9,19 +9,19 @@
         {
             "name": "Battle of Bands",
             "path": "https://picsum.photos/250/200",
-            "date": "02/07/2019",
+            "date": "03/07/2019",
             "seats": 2
         },
         {
             "name": "culture fest",
             "path": "https://picsum.photos/250/200",
-            "date": "02/07/2019",
+            "date": "04/07/2019",
             "seats": 21
         },
         {
             "name": "painting",
             "path": "https://picsum.photos/250/200",
-            "date": "02/07/2019",
+            "date": "05/07/2019",
             "seats": 21
         }
     ]

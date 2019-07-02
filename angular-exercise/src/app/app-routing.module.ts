@@ -12,7 +12,7 @@ const appRoutes: Routes = [
         component: PageNotFoundComponent
     },
     {
-        path: '',
+        path: '**',
         redirectTo: '/home/event-listing',
         pathMatch: 'full'
     }

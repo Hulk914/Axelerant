@@ -13,9 +13,8 @@ const routes: Routes = [
     component: EventBookingComponent
   },
   {
-    path: '',
-    redirectTo: '/page-not-found',
-    pathMatch: 'full'
+    path: '**',
+    redirectTo: '/page-not-found'
   }
 ];
 
