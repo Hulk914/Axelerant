@@ -30,6 +30,7 @@ Create Event Management System as per directions given by Axelerant for the purp
 - Usage of flex and grids
 - BEM naming convention followed for css classes
 - handling of unknown urls user may enter manually to page not found or home page
+- usage of reactive forms
 
 
 ## Enhancements
