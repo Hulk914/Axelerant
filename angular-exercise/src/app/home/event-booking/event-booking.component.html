@@ -1,4 +1,8 @@
 <div class="container">
+  <span #success></span>
+  <div class="alert alert-success" role="alert" *ngIf="showSuccessAlert">
+    Event Submission is successfull. Redirecting to listing page in few seconds.
+  </div>
   <div *ngIf="!eventService?.selectedEvent?.name" class="alert alert-danger" role="alert">
     Please go back to listing page since currently reload persistence is not handled
   </div>
@@ -17,30 +21,56 @@
         <span class="text-danger" *ngIf="eventForm.get('name').hasError('required') && eventForm.get('name').touched">
           Please enter your name
         </span>
+        <span class="text-danger" *ngIf="eventForm.get('name').hasError('pattern') && eventForm.get('name').touched">
+          Only letters and spaces are allowed
+        </span>
       </div>
       <div class="form-group col-md-6">
-        <label for="email">Email</label>
+        <label for="email">Email <span class="text-danger">*</span></label>
         <input type="email" class="form-control" id="email" formControlName="email" placeholder="Enter Email">
+        <span class="text-danger" *ngIf="eventForm.get('email').hasError('required') && eventForm.get('email').touched">
+          Please enter your email
+        </span>
+        <span class="text-danger" *ngIf="eventForm.get('email').hasError('pattern') && eventForm.get('email').touched">
+          Invalid email
+        </span>
       </div>
       <div class="form-group col-md-6">
-        <label for="phone">Phone Number</label>
+        <label for="phone">Phone Number <span class="text-danger">*</span></label>
         <input type="text" class="form-control" id="phone" formControlName="phone" placeholder="Enter Phone Number">
+        <span class="text-danger"
+          *ngIf="eventForm.get('phone').hasError('invalidPhone') && eventForm.get('phone').touched">
+          Please enter 10 digit phone number
+        </span>
       </div>
       <div class="form-group col-md-6">
-        <label for="seats">Seats</label>
+        <label for="seats">Seats <span class="text-danger">*</span></label>
         <select id="seats" class="form-control" formControlName="seats">
           <option *ngFor="let seat of [1,2,3,4,5,6]" [ngValue]="seat">
             {{seat}}
           </option>
         </select>
+        <span class="text-danger" *ngIf="eventForm.get('seats').hasError('required') && eventForm.get('seats').touched">
+          Please enter number of seats
+        </span>
+        <span class="text-danger" *ngIf="eventForm.get('seats').hasError('max') && eventForm.get('seats').touched">
+          Number of seats selected is more than available seats
+        </span>
       </div>
     </div>
     <div class="form-row" formArrayName="extraAttendees">
-      <div class="form-group col-md-6" *ngFor="let arrayItem of extraAttendees.controls; let i=index" [formGroupName]='i'>
-        <label for="others+i">Other {{i+1}}</label>
-        <input type="text" class="form-control" [id]="others+i" formControlName="others" placeholder="Enter Name">
+      <div class="form-group col-md-6" *ngFor="let arrayItem of extraAttendees.controls; let i=index"
+        [formGroupName]='i'>
+        <label for="attendee+i">Attendee {{i+1}} <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" [id]="attendee+i" formControlName="attendee" placeholder="Enter Name">
+        <span class="text-danger" *ngIf="arrayItem.get('attendee').hasError('required') && arrayItem.touched">
+          Please enter the name of Attendee {{i+1}}
+        </span>
       </div>
     </div>
-    <button type="submit" class="btn btn-primary">Sign in</button>
+    <div class="d-flex justify-content-end">
+      <button type="submit" class="btn btn-primary mr-1" [disabled]="eventForm.invalid">Submit</button>
+      <button class="btn btn-danger" (click)="onCancel()">Cancel</button>
+    </div>
   </form>
 </div>

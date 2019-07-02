@@ -28,12 +28,10 @@ export class EventListingComponent implements OnInit {
       timer(2000).subscribe(() => {
         this.isDataLoaded = true;
       });
-      console.log(this.data);
     });
   }
 
   searchName() {
-    console.log(this.searchVal);
     if (!this.searchVal) {
       this.data = this.masterData.slice();
     } else {

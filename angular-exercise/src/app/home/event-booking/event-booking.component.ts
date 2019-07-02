@@ -1,6 +1,8 @@
 import { EventService } from './../event.service';
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, FormArray, Validators, AbstractControl } from '@angular/forms';
+import { Location } from '@angular/common';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-event-booking',
@@ -9,16 +11,19 @@ import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@ang
 })
 export class EventBookingComponent implements OnInit {
 
+  @ViewChild('success') successAlert: ElementRef;
   eventForm: FormGroup;
   arrayItems = [];
-  constructor(private eventService: EventService, private fb: FormBuilder) { }
+  showSuccessAlert: boolean;
+
+  constructor(private eventService: EventService, private fb: FormBuilder, private location: Location) { }
 
   ngOnInit() {
     this.eventForm = this.fb.group({
-      name: ['', Validators.required],
-      email: [''],
-      phone: [''],
-      seats: [1],
+      name: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+      email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
+      phone: ['', this.ValidatePhoneNumber],
+      seats: [1, [Validators.required, Validators.max(this.eventService.selectedEvent['seats'])]],
       extraAttendees: this.fb.array([])
     });
 
@@ -29,10 +34,10 @@ export class EventBookingComponent implements OnInit {
           this.extraAttendees.removeAt(0);
         }
         this.arrayItems.forEach((val) => {
-          const otherGroup = this.fb.group({
-            others: ['']
+          const attendeeGroup = this.fb.group({
+            attendee: ['', Validators.required]
           });
-          this.extraAttendees.push(otherGroup);
+          this.extraAttendees.push(attendeeGroup);
         });
       } else {
         while (0 !== this.extraAttendees.length) {
@@ -41,14 +46,34 @@ export class EventBookingComponent implements OnInit {
         this.arrayItems = [];
       }
     });
+  }
 
-    this.eventForm.valueChanges.subscribe((val) => {
-      console.log(val);
-    });
+  ValidatePhoneNumber(control: AbstractControl) {
+    if (isNaN(control.value) || control.value.length !== 10) {
+      return { invalidPhone: true };
+    }
+    return null;
   }
 
   get extraAttendees() {
     return this.eventForm.get('extraAttendees') as FormArray;
   }
 
+  onSubmit(finalForm) {
+    if (finalForm.invalid) {
+      return;
+    }
+    this.showSuccessAlert = true;
+    this.successAlert.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // since no post apis present, as per requirement logging data to console
+    console.log('Submission Data', finalForm);
+    timer(5000).subscribe(() => {
+      this.showSuccessAlert = false;
+      this.location.back();
+    });
+  }
+
+  onCancel() {
+    this.location.back();
+  }
 }

@@ -6,9 +6,8 @@
     <h2>Event List</h2>
     <div>
       <div class="row mx-0 justify-content-end">
-        <input class="form-control col-sm-7 mr-2" [(ngModel)]="searchVal" (ngModelChange)="searchName()" type="search" placeholder="SEARCH EVENTS"
+        <input class="form-control" [(ngModel)]="searchVal" (ngModelChange)="searchName()" type="search" placeholder="SEARCH EVENTS"
           aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0 col-sm-4" type="submit">Search</button>
       </div>
     </div>
   </div>
@@ -41,7 +40,7 @@
       </div>
     </div>
 
-    <div *ngIf="data.length === 0 && isDataLoaded" class="d-flex border mx-auto">
+    <div *ngIf="data.length === 0 && isDataLoaded" class="d-flex border mx-auto data-table--border-width-color mx-0">
       <span class="justify-content-center mx-auto">No results found!</span>
     </div>
   </ng-container>
